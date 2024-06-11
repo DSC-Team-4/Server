@@ -21,6 +21,6 @@ public class WikiController {
 
         model.addAttribute("wikis", findWikiResponses);
 
-        return "/index";
+        return "index";
     }
 }
