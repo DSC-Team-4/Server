@@ -53,6 +53,7 @@ input {
 
 #submitButton {
     height: 40px;
+    width: 100px;
     font-size: 16px;
     padding: 0 20px;
     background-color: #007bff;
