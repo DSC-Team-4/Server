@@ -75,4 +75,5 @@ input {
 
 .filter-box {
     justify-content: space-between;
+    margin: 5px 100px 15px;
 }
