@@ -5,15 +5,17 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 
 public record SearchResponse(
+        Long id,
         String title,
-     String country,
-     String url,
-     String editedAt
+        String country,
+        String url,
+        String editedAt
 ) {
 
     public static List<SearchResponse>ofList(List<Wiki> wikis) {
         return wikis.stream().map(wiki ->
                 new SearchResponse(
+                        wiki.getId(),
                         wiki.getTitle(),
                         wiki.getCountry(),
                         wiki.getUrl(),
