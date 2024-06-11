@@ -8,28 +8,25 @@ import dsc.server.service.WikiService;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
-public class WikiController {
+public class WikiRestController {
     private final WikiService wikiService;
 
     @PostMapping("/save")
-    public String save(@RequestBody WikiRequest request) {
+    public Long save(@RequestBody WikiRequest request) {
         Wiki newWiki = new Wiki(request.title(), request.country(), request.url(), LocalDateTime.now());
-        Long savedWikiId = wikiService.save(newWiki);
-        return "/index";
+        return wikiService.save(newWiki);
     }
 
     @GetMapping("/all-data")
-    @ResponseBody
     public List<SearchResponse> getWikiList(@ModelAttribute SearchRequest searchDto, Model model) {
         List<Wiki> resultWikis = wikiService.getAll();
 
