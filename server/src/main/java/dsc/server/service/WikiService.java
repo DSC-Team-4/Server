@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class WikiService {
     private final WikiRepository wikiRepository;
 
-    public String save(Wiki wiki) {
+    public Long save(Wiki wiki) {
         return wikiRepository.save(wiki).getId();
     }
 

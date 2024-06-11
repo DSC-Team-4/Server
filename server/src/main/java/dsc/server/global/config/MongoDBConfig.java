@@ -1,4 +1,4 @@
-package dsc.server.config;
+package dsc.server.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

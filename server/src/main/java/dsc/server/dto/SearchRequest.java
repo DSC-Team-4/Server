@@ -1,8 +1,6 @@
 package dsc.server.dto;
 
-import java.time.LocalDateTime;
-
-public record SearchDto(
+public record SearchRequest(
         String search,
         String period,
         String country,

@@ -1,21 +1,30 @@
 package dsc.server.entity;
 
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "data")
 @Getter
+@Setter
 public class Wiki {
-    @Id
-    private String id;
-    private final String title;
-    private final LocalDateTime createdAt;
+    @Transient
+    public static final String SEQUENCE_NAME = "wiki_sequence";
 
-    public Wiki(String title, LocalDateTime createdAt) {
+    @Id
+    private Long id;
+    private final String title;
+    private final String country;
+    private final String url;
+    private final LocalDateTime editedAt;
+
+    public Wiki(String title, String country, String url, LocalDateTime editedAt) {
         this.title = title;
-        this.createdAt = createdAt;
+        this.country = country;
+        this.url = url;
+        this.editedAt = editedAt;
     }
 }
