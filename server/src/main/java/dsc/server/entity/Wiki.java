@@ -21,10 +21,10 @@ public class Wiki {
     private final String uri;
     private final LocalDateTime editedAt;
 
-    public Wiki(String title, String country, String url, LocalDateTime editedAt) {
+    public Wiki(String title, String country, String uri, LocalDateTime editedAt) {
         this.title = title;
         this.country = country;
-        this.uri = url;
+        this.uri = uri;
         this.editedAt = editedAt;
     }
 }
