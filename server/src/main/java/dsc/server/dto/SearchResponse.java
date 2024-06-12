@@ -18,7 +18,7 @@ public record SearchResponse(
                         wiki.getId(),
                         wiki.getTitle(),
                         wiki.getCountry(),
-                        wiki.getUrl(),
+                        wiki.getUri(),
                         wiki.getEditedAt().toString()))
                 .toList();
     }

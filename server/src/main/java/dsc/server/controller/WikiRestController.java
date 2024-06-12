@@ -19,7 +19,7 @@ public class WikiRestController {
 
     @PostMapping("/save")
     public Long save(@RequestBody WikiRequest request) {
-        Wiki newWiki = new Wiki(request.title(), request.country(), request.url(), LocalDateTime.now());
+        Wiki newWiki = new Wiki(request.title(), request.country(), request.uri(), LocalDateTime.now());
         return wikiService.save(newWiki);
     }
 

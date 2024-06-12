@@ -16,7 +16,7 @@ public record WikiResponse(
         return wikis.stream().map(wiki -> new WikiResponse(
                 wiki.getTitle(),
                 wiki.getCountry(),
-                wiki.getUrl(),
+                wiki.getUri(),
                 wiki.getEditedAt().format(formatter))
         ).toList();
     }
@@ -25,7 +25,7 @@ public record WikiResponse(
         return new WikiResponse(
                 wiki.getTitle(),
                 wiki.getCountry(),
-                wiki.getUrl(),
+                wiki.getUri(),
                 wiki.getEditedAt().toString()
         );
     }
