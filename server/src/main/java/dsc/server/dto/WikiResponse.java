@@ -7,7 +7,7 @@ import java.util.List;
 public record WikiResponse(
         String title,
         String country,
-        String url,
+        String uri,
         String editedAt
 ) {
     public static List<WikiResponse> ofList(List<Wiki> wikis) {
