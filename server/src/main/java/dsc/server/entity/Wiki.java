@@ -18,7 +18,7 @@ public class Wiki {
     private Long id;
     private final String title;
     private final String country;
-    private final String url;
+    private final String uri;
     private final LocalDateTime editedAt;
 
     public Wiki(String title, String country, String url, LocalDateTime editedAt) {
