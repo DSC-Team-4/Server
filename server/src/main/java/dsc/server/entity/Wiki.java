@@ -24,7 +24,7 @@ public class Wiki {
     public Wiki(String title, String country, String url, LocalDateTime editedAt) {
         this.title = title;
         this.country = country;
-        this.url = url;
+        this.uri = url;
         this.editedAt = editedAt;
     }
 }
