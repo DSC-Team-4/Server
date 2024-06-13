@@ -35,6 +35,6 @@ public class WikiScheduler {
                 .limit(topMaxCount)
                 .toList();
 
-        System.out.println(hotWikis.size());
+        log.info("found Wiki data size: {}", hotWikis.size());
     }
 }
