@@ -1,6 +1,8 @@
 package dsc.server.service;
 
+import dsc.server.entity.HotWiki;
 import dsc.server.entity.Wiki;
+import dsc.server.repository.HotWikiRepository;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class WikiScheduler {
     private final WikiService wikiService;
+    private final HotWikiRepository hotWikiRepository;
 
     /*
      * 1000 * 60 = 1분
@@ -35,6 +38,9 @@ public class WikiScheduler {
                 .limit(topMaxCount)
                 .toList();
 
-        log.info("found Wiki data size: {}", hotWikis.size());
+        hotWikiRepository.saveAll(HotWiki.ofList(hotWikis));
+
+        log.info("found Wiki data size: {}", wikis.size());
+        log.info("saved HotWiki data size: {}", hotWikis.size());
     }
 }
