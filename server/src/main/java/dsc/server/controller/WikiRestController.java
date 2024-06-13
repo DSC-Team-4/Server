@@ -1,12 +1,16 @@
 package dsc.server.controller;
 
-import dsc.server.dto.SearchResponse;
+import dsc.server.dto.WikiEwmaRequest;
 import dsc.server.dto.WikiRequest;
+import dsc.server.dto.WikiResponse;
+import dsc.server.entity.NotEwmaWiki;
 import dsc.server.entity.Wiki;
 import dsc.server.service.WikiService;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,14 +23,21 @@ public class WikiRestController {
 
     @PostMapping("/save")
     public Long save(@RequestBody WikiRequest request) {
-        Wiki newWiki = new Wiki(request.title(), request.country(), request.uri(), LocalDateTime.now());
-        return wikiService.save(newWiki);
+        LocalDateTime editedAt = LocalDateTime.parse(request.editedAt());
+
+        NotEwmaWiki newNotEwmaWiki = new NotEwmaWiki(request.title(), request.country(), request.uri(), request.metaId(), editedAt);
+        return wikiService.save(newNotEwmaWiki);
     }
 
     @GetMapping("/all-data")
-    public List<SearchResponse> getWikiList() {
-        List<Wiki> resultWikis = wikiService.getAll();
+    public List<WikiResponse> getWikis() {
+        List<Wiki> resultNotEwmaWikis = wikiService.getAll();
 
-        return SearchResponse.ofList(resultWikis);
+        return WikiResponse.ofList(resultNotEwmaWikis);
+    }
+
+    @GetMapping("/get-ewma-data")
+    public List<WikiEwmaRequest> getWikisByEwma() {
+        return wikiService.getWikisForUpdateEwma();
     }
 }

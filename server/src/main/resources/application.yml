@@ -2,3 +2,4 @@ spring:
   data:
     mongodb:
       uri: mongodb://admin:1234@34.168.247.75:27017/admin?authSource=admin&authMechanism=SCRAM-SHA-1
+      uuid-representation: standard

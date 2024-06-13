@@ -9,12 +9,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "wiki")
+@Document(collection = "data")
 @Getter
 @Setter
-public class Wiki {
+public class NotEwmaWiki {
     @Transient
-    public static final String SEQUENCE_NAME = "wiki_sequence";
+    public static final String SEQUENCE_NAME = "not_wiki_sequence";
 
     @Id
     private Long id;
@@ -22,17 +22,14 @@ public class Wiki {
     private final String country;
     private final String uri;
     private final UUID metaId;
-    private final int editCount;
-    private final Double ewma;
+    private Double ewma = null;
     private final LocalDateTime editedAt;
 
-    public Wiki(String title, String country, String uri, UUID metaId, Double ewma, int editCount, LocalDateTime editedAt) {
+    public NotEwmaWiki(String title, String country, String uri, UUID metaId, LocalDateTime editedAt) {
         this.title = title;
         this.country = country;
         this.uri = uri;
         this.metaId = metaId;
-        this.ewma = ewma;
-        this.editCount = editCount;
         this.editedAt = editedAt;
     }
 
@@ -43,9 +40,9 @@ public class Wiki {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Wiki wikiObj) {
-            if (this.metaId != null && wikiObj.metaId != null) {
-                return this.metaId.equals(wikiObj.metaId);
+        if (obj instanceof NotEwmaWiki notEwmaWikiObj) {
+            if (this.metaId != null && notEwmaWikiObj.metaId != null) {
+                return this.metaId.equals(notEwmaWikiObj.metaId);
             }
 
             return false;
