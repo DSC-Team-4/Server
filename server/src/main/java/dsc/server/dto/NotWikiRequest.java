@@ -1,12 +1,13 @@
 package dsc.server.dto;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record WikiRequest(
+public record NotWikiRequest(
         String title,
         String country,
         UUID metaId,
         String uri,
-        String editedAt
+        LocalDateTime editedAt
 ) {
 }

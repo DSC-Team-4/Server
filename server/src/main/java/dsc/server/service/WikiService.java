@@ -2,7 +2,7 @@ package dsc.server.service;
 
 import dsc.server.dto.WikiEwmaRequest;
 import dsc.server.dto.WikiEwmaRequest.WikiInfo;
-import dsc.server.dto.WikiRequest;
+import dsc.server.dto.WikiUpdateRequest;
 import dsc.server.dto.WikiResponse;
 import dsc.server.entity.NotEwmaWiki;
 import dsc.server.entity.Wiki;
@@ -18,9 +18,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -107,13 +104,23 @@ public class WikiService {
         return result;
     }
 
-    private void initWiki(Long id) {
-        Query findQuery = new Query();
-        findQuery.addCriteria(Criteria.where("_id").is(id));
+    public void saveWikis(List<WikiUpdateRequest> updateRequest) {
+        List<Wiki> saveWikis = new ArrayList<>();
 
-        Update update = new Update();
-        update.set("ewma", 1);
+        for (WikiUpdateRequest request : updateRequest) {
+            UUID metaId = request.metaId();
+            List<Wiki> wikis = request.updateWikiInfos().stream().map(info -> new Wiki(
+                    info.title(),
+                    info.country(),
+                    info.uri(),
+                    metaId,
+                    info.ewma(),
+                    info.editCount(),
+                    info.editedAt()
+            )).toList();
+            saveWikis.addAll(wikis);
+        }
 
-        mongoTemplate.updateFirst(findQuery, update, Wiki.class);
+        wikiRepository.saveAll(saveWikis);
     }
 }
