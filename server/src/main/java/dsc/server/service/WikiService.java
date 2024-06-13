@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 public class WikiService {
     private final NotEwmaWikiRepository notEwmaWikiRepository;
     private final WikiRepository wikiRepository;
-    private final MongoTemplate mongoTemplate;
 
     public Long save(NotEwmaWiki notEwmaWiki) {
         return notEwmaWikiRepository.save(notEwmaWiki).getId();
