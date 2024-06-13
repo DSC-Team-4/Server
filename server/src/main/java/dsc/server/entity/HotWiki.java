@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -26,8 +27,9 @@ public class HotWiki {
     private final int editCount;
     private final Double ewma;
     private final LocalDateTime editedAt;
+    private LocalDateTime createdAt;
 
-    public HotWiki(String title, String country, String uri, UUID metaId, Double ewma, int editCount, LocalDateTime editedAt) {
+    public HotWiki(String title, String country, String uri, UUID metaId, Double ewma, int editCount, LocalDateTime editedAt, LocalDateTime createdAt) {
         this.title = title;
         this.country = country;
         this.uri = uri;
@@ -35,6 +37,7 @@ public class HotWiki {
         this.ewma = ewma;
         this.editCount = editCount;
         this.editedAt = editedAt;
+        this.createdAt = createdAt;
     }
 
     @Override
@@ -56,6 +59,7 @@ public class HotWiki {
     }
 
     public static List<HotWiki> ofList(List<Wiki> wikis) {
+        LocalDateTime now = LocalDateTime.now();
         return wikis.stream().map(wiki -> new HotWiki(
                 wiki.getTitle(),
                 wiki.getCountry(),
@@ -63,7 +67,8 @@ public class HotWiki {
                 wiki.getMetaId(),
                 wiki.getEwma(),
                 wiki.getEditCount(),
-                wiki.getEditedAt()
+                wiki.getEditedAt(),
+                now
             )).toList();
     }
 }
