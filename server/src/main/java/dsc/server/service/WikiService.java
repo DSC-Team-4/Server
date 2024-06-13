@@ -117,9 +117,15 @@ public class WikiService {
                     info.editCount(),
                     info.editedAt()
             )).toList();
+
             saveWikis.addAll(wikis);
         }
 
         wikiRepository.saveAll(saveWikis);
     }
+
+    public List<Wiki> findByEditedAtBetween(LocalDateTime threeHoursAgo, LocalDateTime now) {
+        return wikiRepository.findByEditedAtBetween(threeHoursAgo, now);
+    }
+
 }

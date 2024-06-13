@@ -16,7 +16,7 @@ public class SchedulerConfig implements SchedulingConfigurer {
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
 
-        int POLL_SIZE = 3;
+        final int POLL_SIZE = 3;
 
         threadPoolTaskScheduler.setPoolSize(POLL_SIZE);
         threadPoolTaskScheduler.setThreadNamePrefix("wiki_thread");

@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface WikiRepository extends MongoRepository<Wiki, String> {
     List<Wiki> findByTitleContainingAndCountryAndEditedAtBetween(String search, String country, LocalDateTime start, LocalDateTime end);
     List<Wiki> findByTitleContainingAndCountry(String search, String country);
-    List<Wiki> findByEwmaIsNull();
     Optional<Wiki> findTop1ByMetaIdAndEwmaIsNotNullOrderByEditedAtDesc(UUID metaId);
+
+    List<Wiki> findByEditedAtBetween(LocalDateTime threeHoursAgo, LocalDateTime now);
 }
