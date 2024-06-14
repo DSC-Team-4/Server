@@ -6,7 +6,7 @@ import java.util.UUID;
 public record NotWikiRequest(
         String title,
         String country,
-        UUID metaId,
+        String metaId,
         String uri,
         LocalDateTime editedAt
 ) {

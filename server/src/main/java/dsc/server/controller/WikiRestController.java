@@ -8,6 +8,7 @@ import dsc.server.entity.NotEwmaWiki;
 import dsc.server.entity.Wiki;
 import dsc.server.service.WikiService;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,8 @@ public class WikiRestController {
 
     @PostMapping("/save")
     public Long save(@RequestBody NotWikiRequest request) {
-        NotEwmaWiki newNotEwmaWiki = new NotEwmaWiki(request.title(), request.country(), request.uri(), request.metaId(), request.editedAt());
+        UUID metaId = UUID.fromString(request.metaId());
+        NotEwmaWiki newNotEwmaWiki = new NotEwmaWiki(request.title(), request.country(), request.uri(), metaId, request.editedAt());
         return wikiService.save(newNotEwmaWiki);
     }
 
