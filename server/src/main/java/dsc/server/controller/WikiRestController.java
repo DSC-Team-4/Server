@@ -41,6 +41,6 @@ public class WikiRestController {
 
     @PostMapping("/update-ewma-data")
     public void saveWikis(@RequestBody List<WikiUpdateRequest> request) {
-        wikiService.saveWikis(request);
+        wikiService.updateEwma(request);
     }
 }

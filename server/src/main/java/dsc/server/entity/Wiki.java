@@ -23,7 +23,7 @@ public class Wiki {
     private final String uri;
     private final UUID metaId;
     private final int editCount;
-    private final Double ewma;
+    private Double ewma;
     private final LocalDateTime editedAt;
 
     public Wiki(String title, String country, String uri, UUID metaId, Double ewma, int editCount, LocalDateTime editedAt) {
@@ -52,5 +52,9 @@ public class Wiki {
         }
 
         return false;
+    }
+
+    public void updateEwma(Double ewma) {
+        this.ewma = ewma;
     }
 }

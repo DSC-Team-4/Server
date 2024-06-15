@@ -14,4 +14,6 @@ public interface WikiRepository extends MongoRepository<Wiki, String> {
     Optional<Wiki> findTop1ByMetaIdAndEwmaIsNotNullOrderByEditedAtDesc(UUID metaId);
 
     List<Wiki> findByEditedAtBetween(LocalDateTime threeHoursAgo, LocalDateTime now);
+
+    Optional<Wiki> findByMetaId(UUID uuid);
 }
