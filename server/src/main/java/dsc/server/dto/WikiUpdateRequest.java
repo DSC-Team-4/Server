@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public record WikiUpdateRequest(
     UUID metaId,
-    Double ewma
+    Double ewma,
+    int editCount
 ) {
 }

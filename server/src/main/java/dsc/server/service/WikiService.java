@@ -117,8 +117,9 @@ public class WikiService {
             Wiki findWiki = wikiRepository.findByMetaId(request.metaId()).orElseThrow();
             Double newEwma = request.ewma();
             Long id = findWiki.getId();
+            int editCount = request.editCount();
 
-            updateWikiEwma(newEwma, id);
+            updateWikiEwma(newEwma, id, editCount);
         }
     }
 
@@ -126,9 +127,11 @@ public class WikiService {
         return wikiRepository.findByEditedAtBetween(threeHoursAgo, now);
     }
 
-    private void updateWikiEwma(Double newEwma, Long id) {
+    private void updateWikiEwma(Double newEwma, Long id, int editCount) {
         Query query = new Query(Criteria.where("_id").is(id));
         Update update = Update.update("ewma", newEwma);
+        update.set("editCount", editCount);
+
         mongoTemplate.updateFirst(query, update, Wiki.class);
     }
 }
