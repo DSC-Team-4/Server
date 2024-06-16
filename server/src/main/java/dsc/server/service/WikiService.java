@@ -1,5 +1,7 @@
 package dsc.server.service;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.result.UpdateResult;
 import dsc.server.dto.WikiEwmaRequest;
 import dsc.server.dto.WikiEwmaRequest.WikiInfo;
 import dsc.server.dto.WikiUpdateRequest;
@@ -17,6 +19,11 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +31,7 @@ import org.springframework.stereotype.Service;
 public class WikiService {
     private final NotEwmaWikiRepository notEwmaWikiRepository;
     private final WikiRepository wikiRepository;
+    private final MongoTemplate mongoTemplate;
 
     public Long save(NotEwmaWiki notEwmaWiki) {
         return notEwmaWikiRepository.save(notEwmaWiki).getId();
@@ -102,29 +110,25 @@ public class WikiService {
         return result;
     }
 
-    public void saveWikis(List<WikiUpdateRequest> updateRequest) {
+    public void updateEwma(List<WikiUpdateRequest> updateRequest) {
         List<Wiki> saveWikis = new ArrayList<>();
 
         for (WikiUpdateRequest request : updateRequest) {
-            UUID metaId = request.metaId();
-            List<Wiki> wikis = request.updateWikiInfos().stream().map(info -> new Wiki(
-                    info.title(),
-                    info.country(),
-                    info.uri(),
-                    metaId,
-                    info.ewma(),
-                    info.editCount(),
-                    info.editedAt()
-            )).toList();
+            Wiki findWiki = wikiRepository.findByMetaId(request.metaId()).orElseThrow();
+            Double newEwma = request.ewma();
+            Long id = findWiki.getId();
 
-            saveWikis.addAll(wikis);
+            updateWikiEwma(newEwma, id);
         }
-
-        wikiRepository.saveAll(saveWikis);
     }
 
     public List<Wiki> findByEditedAtBetween(LocalDateTime threeHoursAgo, LocalDateTime now) {
         return wikiRepository.findByEditedAtBetween(threeHoursAgo, now);
     }
 
+    private void updateWikiEwma(Double newEwma, Long id) {
+        Query query = new Query(Criteria.where("_id").is(id));
+        Update update = Update.update("ewma", newEwma);
+        mongoTemplate.updateFirst(query, update, Wiki.class);
+    }
 }
