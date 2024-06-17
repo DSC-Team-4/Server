@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,8 +24,11 @@ public class WikiRestController {
     private final WikiService wikiService;
 
     @GetMapping("/search")
-    public List<WikiResponse> search(@ModelAttribute SearchRequest request) {
-        return wikiService.findByFilter(request.period(), request.country());
+    public List<WikiResponse> search(@RequestParam("period") String period,
+                                     @RequestParam("country") String country,
+                                     @RequestParam("maxCount") int maxCount
+    ) {
+        return wikiService.findByFilter(period, country, maxCount);
     }
 
     @GetMapping("/all-data")

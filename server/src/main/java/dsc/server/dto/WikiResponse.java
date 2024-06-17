@@ -31,6 +31,21 @@ public record WikiResponse(
         ).toList();
     }
 
+    public static List<WikiResponse> ofList(List<Wiki> wikis, int maxCount) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+
+        return wikis.stream().map(wiki -> new WikiResponse(
+                wiki.getId(),
+                wiki.getTitle(),
+                wiki.getCountry(),
+                wiki.getUri(),
+                wiki.getMetaId(),
+                wiki.getEwma(),
+                wiki.getEditCount(),
+                wiki.getEditedAt().format(formatter))
+        ).limit(maxCount).toList();
+    }
+
     public static WikiResponse of(Wiki wiki) {
         return new WikiResponse(
                 wiki.getId(),
