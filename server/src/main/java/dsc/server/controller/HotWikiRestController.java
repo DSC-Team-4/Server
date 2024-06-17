@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class HotWikiController {
+public class HotWikiRestController {
     private final HotWikiService hotWikiService;
 
     @GetMapping("/get-hot-wikis")
