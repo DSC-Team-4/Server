@@ -1,6 +1,7 @@
 package dsc.server.controller;
 
 import dsc.server.dto.NotWikiRequest;
+import dsc.server.dto.SearchRequest;
 import dsc.server.dto.WikiEwmaRequest;
 import dsc.server.dto.WikiUpdateRequest;
 import dsc.server.dto.WikiResponse;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class WikiRestController {
     private final WikiService wikiService;
 
-    @PostMapping("/save")
-    public Long save(@RequestBody NotWikiRequest request) {
-        UUID metaId = UUID.fromString(request.metaId());
-        NotEwmaWiki newNotEwmaWiki = new NotEwmaWiki(request.title(), request.country(), request.uri(), metaId, request.editedAt());
-        return wikiService.save(newNotEwmaWiki);
+    @GetMapping("/search")
+    public List<WikiResponse> search(@ModelAttribute SearchRequest request) {
+        return wikiService.findByFilter(request.period(), request.country());
     }
 
     @GetMapping("/all-data")
@@ -42,5 +42,12 @@ public class WikiRestController {
     @PostMapping("/update-ewma-data")
     public void saveWikis(@RequestBody List<WikiUpdateRequest> request) {
         wikiService.updateEwma(request);
+    }
+
+    @PostMapping("/save")
+    public Long save(@RequestBody NotWikiRequest request) {
+        UUID metaId = UUID.fromString(request.metaId());
+        NotEwmaWiki newNotEwmaWiki = new NotEwmaWiki(request.title(), request.country(), request.uri(), metaId, request.editedAt());
+        return wikiService.save(newNotEwmaWiki);
     }
 }
