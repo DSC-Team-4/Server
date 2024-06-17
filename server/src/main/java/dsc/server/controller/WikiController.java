@@ -9,18 +9,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class WikiController {
     private final WikiService wikiService;
 
     @GetMapping("/search")
-    public String search(@ModelAttribute SearchRequest request, Model model) {
-        List<WikiResponse> findWikiResponses = wikiService.findByFilter(request.search(), request.period(), request.country());
-
-        model.addAttribute("wikis", findWikiResponses);
-
-        return "index";
+    public List<WikiResponse> search(@ModelAttribute SearchRequest request) {
+        return wikiService.findByFilter(request.period(), request.country());
     }
 }

@@ -33,16 +33,16 @@ public class WikiService {
         return wikiRepository.findAll();
     }
 
-    public List<WikiResponse> findByFilter(String search, String period, String country) {
+    public List<WikiResponse> findByFilter(String period, String country) {
         if (!"all".equals(period)) {
             LocalDateTime start = LocalDateTime.now().minusMonths(Integer.parseInt(period));
             LocalDateTime end = LocalDateTime.now();
 
-            List<Wiki> findWikis = wikiRepository.findByTitleContainingAndCountryAndEditedAtBetween(search, country, start, end);
+            List<Wiki> findWikis = wikiRepository.findByCountryAndEditedAtBetween(country, start, end);
             return WikiResponse.ofList(findWikis);
         }
 
-        List<Wiki> findWikis = wikiRepository.findByTitleContainingAndCountry(search, country);
+        List<Wiki> findWikis = wikiRepository.findByCountry(country);
         return WikiResponse.ofList(findWikis);
     }
 
