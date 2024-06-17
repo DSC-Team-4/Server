@@ -10,13 +10,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const country = document.getElementById('country').value;
 
         $.ajax({
-            url: '/search',
+            url: '/get-hot-wikis',
             type: 'GET',
             data: {
                 period: period,
                 country: country
             },
             success: function (response){
+                console.log(response);
                 updateWikiList(response);
             },
             error: function (e) {
