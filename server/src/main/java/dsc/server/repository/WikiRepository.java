@@ -1,6 +1,5 @@
 package dsc.server.repository;
 
-import dsc.server.entity.NotEwmaWiki;
 import dsc.server.entity.Wiki;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,11 +8,11 @@ import java.util.UUID;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface WikiRepository extends MongoRepository<Wiki, String> {
-    List<Wiki> findByCountryAndEditedAtBetween(String country, LocalDateTime start, LocalDateTime end);
-    List<Wiki> findByCountry(String country);
+    List<Wiki> findByCountryAndEditedAtBetweenOrderByEwmaDesc(String country, LocalDateTime start, LocalDateTime end);
+    List<Wiki> findByCountryOrderByEwmaDesc(String country);
     Optional<Wiki> findTop1ByMetaIdAndEwmaIsNotNullOrderByEditedAtDesc(UUID metaId);
-
-    List<Wiki> findByEditedAtBetween(LocalDateTime threeHoursAgo, LocalDateTime now);
-
     Optional<Wiki> findByMetaId(UUID uuid);
+    List<Wiki> findByEditedAtBetweenOrderByEwmaDesc(LocalDateTime start, LocalDateTime end);
+    List<Wiki> findByEditedAtBetween(LocalDateTime threeHoursAgo, LocalDateTime now);
+    List<Wiki> findAllByOrderByEwmaDesc();
 }

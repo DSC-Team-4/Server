@@ -1,7 +1,5 @@
 package dsc.server.service;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.result.UpdateResult;
 import dsc.server.dto.WikiEwmaRequest;
 import dsc.server.dto.WikiEwmaRequest.WikiInfo;
 import dsc.server.dto.WikiUpdateRequest;
@@ -19,7 +17,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -41,17 +38,31 @@ public class WikiService {
         return wikiRepository.findAll();
     }
 
-    public List<WikiResponse> findByFilter(String period, String country) {
+    public List<WikiResponse> findByFilter(String period, String country, int maxCount) {
         if (!"all".equals(period)) {
             LocalDateTime start = LocalDateTime.now().minusMonths(Integer.parseInt(period));
             LocalDateTime end = LocalDateTime.now();
 
-            List<Wiki> findWikis = wikiRepository.findByCountryAndEditedAtBetween(country, start, end);
-            return WikiResponse.ofList(findWikis);
+            if (!"all".equals(country)) {
+                List<Wiki> findWikis = wikiRepository.findByCountryAndEditedAtBetweenOrderByEwmaDesc(country, start, end);
+
+                return WikiResponse.ofList(findWikis, maxCount);
+            }
+
+            List<Wiki> findWikis = wikiRepository.findByEditedAtBetweenOrderByEwmaDesc(start, end);
+
+            return WikiResponse.ofList(findWikis, maxCount);
+        }else {
+            if (!"all".equals(country)) {
+                List<Wiki> findWikis = wikiRepository.findByCountryOrderByEwmaDesc(country);
+
+                return WikiResponse.ofList(findWikis, maxCount);
+            }
         }
 
-        List<Wiki> findWikis = wikiRepository.findByCountry(country);
-        return WikiResponse.ofList(findWikis);
+        List<Wiki> findWikis = wikiRepository.findAllByOrderByEwmaDesc();
+
+        return WikiResponse.ofList(findWikis, maxCount);
     }
 
     public List<WikiEwmaRequest> getWikisForUpdateEwma() {
