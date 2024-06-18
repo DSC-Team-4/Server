@@ -1,7 +1,6 @@
 package dsc.server.dto;
 
 import dsc.server.entity.NotEwmaWiki;
-import dsc.server.entity.Wiki;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;

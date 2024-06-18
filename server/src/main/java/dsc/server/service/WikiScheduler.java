@@ -22,7 +22,7 @@ public class WikiScheduler {
      * 1000 * 60 = 1분
      * 1000 * 60 * 60 = 1시간
      */
-    @Scheduled(fixedDelay = 1000 * 60 * 60 * 3, zone = "Asia/Seoul")
+    @Scheduled(fixedDelay = 1000 * 60, zone = "Asia/Seoul")
     public void saveHotWikis() {
         log.info("Saving hot-wikis");
 
