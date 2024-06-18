@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,11 +34,16 @@ public class WikiSearchController {
     }
 
     @GetMapping("/get-hot-wikis")
+    @ResponseBody
     public HotWikiResponse getHotWikis(
             Model model,
             @RequestParam("startTime") LocalDateTime startTime,
             @RequestParam("endTime") LocalDateTime endTime
     ) {
-        return hotWikiService.findByTimeBetween(startTime, endTime);
+        HotWikiResponse result = hotWikiService.findByTimeBetween(startTime, endTime);
+
+        model.addAttribute("wikis", result);
+
+        return result;
     }
 }
