@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('오류 발생', e);
             }
         })
-//        .done(function (fragment){
-//            $('#popularList').replaceWith(fragment);
-//        })
+        .done(function (fragment){
+            $('#popularList').replaceWith(fragment);
+        })
     });
 });

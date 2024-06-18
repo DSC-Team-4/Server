@@ -2,17 +2,14 @@ package dsc.server.controller;
 
 import dsc.server.dto.HotWikiResponse;
 import dsc.server.dto.WikiResponse;
+import dsc.server.entity.HotWiki;
 import dsc.server.service.HotWikiService;
 import dsc.server.service.WikiService;
-import java.time.format.DateTimeFormatter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -36,19 +33,18 @@ public class WikiSearchController {
     }
 
     @GetMapping("/get-hot-wikis")
-    @ResponseBody
-    public HotWikiResponse getHotWikis(
+    public String getHotWikis(
             Model model,
-            @RequestParam("startTime") String startTime,
-            @RequestParam("endTime") String endTime
+            @RequestParam("startTime") LocalDateTime startTime,
+            @RequestParam("endTime") LocalDateTime endTime
     ) {
-        LocalDateTime startDateTime = LocalDateTime.parse(startTime).plusHours(9);
-        LocalDateTime endDateTime = LocalDateTime.parse(endTime).plusHours(9);
+        LocalDateTime startDateTime = startTime.plusHours(9);
+        LocalDateTime endDateTime = endTime.plusHours(9);
 
-        HotWikiResponse result = hotWikiService.findByTimeBetween(startDateTime, endDateTime);
+        List<HotWiki> result = hotWikiService.findByTimeBetween(startDateTime, endDateTime);
 
         model.addAttribute("wikis", result);
 
-        return result;
+        return "/period :: #popularList";
     }
 }
