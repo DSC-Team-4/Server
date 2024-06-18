@@ -5,8 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // 이벤트 기본 동작을 막기 위해 preventDefault() 호출
         event.preventDefault();
 
-        // 폼 데이터 가져오기
-        const country = document.getElementById('country').value;
+        const country = document.querySelector('input[name="country"]:checked').value;
 
         $.ajax({
             url: '/search',
@@ -14,6 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
             data: {
                 country: country,
                 maxCount: 10
+            },
+            success: function (response){
+                console.log(response);
+            },
+            error: function (e) {
+                console.error('오류 발생', e);
             }
         })
         .done(function (fragment){

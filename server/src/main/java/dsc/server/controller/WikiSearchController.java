@@ -20,13 +20,16 @@ public class WikiSearchController {
     private final HotWikiService hotWikiService;
 
     @GetMapping("/search")
-    public List<WikiResponse> search(Model model,
-                                     @RequestParam("country") String country,
-                                     @RequestParam(value = "maxCount") int maxCount
+    public String search(
+            Model model,
+            @RequestParam("country") String country,
+            @RequestParam(value = "maxCount") int maxCount
     ) {
         List<WikiResponse> result = wikiService.findByFilter(country, maxCount);
 
-        return wikiService.findByFilter(country, maxCount);
+        model.addAttribute("wikis", result);
+
+        return "/country :: #popularList";
     }
 
     @GetMapping("/get-hot-wikis")
