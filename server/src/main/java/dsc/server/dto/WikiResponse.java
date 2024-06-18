@@ -2,6 +2,7 @@ package dsc.server.dto;
 
 import dsc.server.entity.NotEwmaWiki;
 import dsc.server.entity.Wiki;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
@@ -14,10 +15,9 @@ public record WikiResponse(
         UUID metaId,
         Double ewma,
         int editCount,
-        String editedAt
+        LocalDateTime editedAt
 ) {
     public static List<WikiResponse> ofList(List<Wiki> wikis) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
 
         return wikis.stream().map(wiki -> new WikiResponse(
                 wiki.getId(),
@@ -27,12 +27,11 @@ public record WikiResponse(
                 wiki.getMetaId(),
                 wiki.getEwma(),
                 wiki.getEditCount(),
-                wiki.getEditedAt().format(formatter))
+                wiki.getEditedAt())
         ).toList();
     }
 
     public static List<WikiResponse> ofList(List<Wiki> wikis, int maxCount) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
 
         return wikis.stream().map(wiki -> new WikiResponse(
                 wiki.getId(),
@@ -42,7 +41,7 @@ public record WikiResponse(
                 wiki.getMetaId(),
                 wiki.getEwma(),
                 wiki.getEditCount(),
-                wiki.getEditedAt().format(formatter))
+                wiki.getEditedAt())
         ).limit(maxCount).toList();
     }
 
@@ -55,7 +54,7 @@ public record WikiResponse(
                 wiki.getMetaId(),
                 wiki.getEwma(),
                 wiki.getEditCount(),
-                wiki.getEditedAt().toString()
+                wiki.getEditedAt()
         );
     }
 }

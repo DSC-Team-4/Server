@@ -10,5 +10,5 @@ public interface HotWikiRepository extends MongoRepository<HotWiki, String> {
 
     List<HotWiki> findByCountry(String country);
     List<HotWiki> findByCountryAndEditedAtBetween(String country, LocalDateTime start, LocalDateTime end);
-    List<HotWiki> findByEditedAtBetween(LocalDateTime start, LocalDateTime end);
+    List<HotWiki> findByCreatedAtBetweenOrderByEwmaDesc(LocalDateTime start, LocalDateTime end);
 }

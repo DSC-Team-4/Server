@@ -2,7 +2,7 @@ package dsc.server.controller;
 
 import dsc.server.dto.HotWikiResponse;
 import dsc.server.service.HotWikiService;
-import java.util.List;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,10 +14,10 @@ public class HotWikiRestController {
     private final HotWikiService hotWikiService;
 
     @GetMapping("/get-hot-wikis")
-    public List<HotWikiResponse> getHotWikis(
-            @RequestParam("period") String period,
-            @RequestParam("country") String country
+    public HotWikiResponse getHotWikis(
+            @RequestParam("startTime") LocalDateTime startTime,
+            @RequestParam("endTime") LocalDateTime endTime
     ) {
-        return hotWikiService.findByFilter(period, country);
+        return hotWikiService.findByTimeBetween(startTime, endTime);
     }
 }

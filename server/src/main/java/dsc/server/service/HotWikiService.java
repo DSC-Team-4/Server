@@ -1,6 +1,7 @@
 package dsc.server.service;
 
 import dsc.server.dto.HotWikiResponse;
+import dsc.server.dto.HotWikiResponse.HotWikiInfo;
 import dsc.server.entity.HotWiki;
 import dsc.server.repository.HotWikiRepository;
 import java.time.LocalDateTime;
@@ -21,29 +22,12 @@ public class HotWikiService {
         return getHotWikiResponses(hotWikis);
     }
 
-    public List<HotWikiResponse> findByFilter(String period, String country) {
-        if (!"all".equals(period)) {
-            LocalDateTime start = LocalDateTime.now().minusMonths(Integer.parseInt(period));
-            LocalDateTime end = LocalDateTime.now();
+    public HotWikiResponse findByTimeBetween(LocalDateTime startTime, LocalDateTime endTime) {
+        List<HotWiki> findWikis = hotWikiRepository.findByCreatedAtBetweenOrderByEwmaDesc(startTime, endTime);
 
-            if (!"all".equals(country)) {
-                List<HotWiki> findWikis = hotWikiRepository.findByCountryAndEditedAtBetween(country, start, end);
+        List<HotWikiInfo> hotWikiInfos = HotWikiInfo.ofList(findWikis);
 
-                return getHotWikiResponses(findWikis);
-            }
-
-            List<HotWiki> findWikis = hotWikiRepository.findByEditedAtBetween(start, end);
-
-            return getHotWikiResponses(findWikis);
-        }else { // 전체 기간 선택
-            if (!"all".equals(country)) {
-                List<HotWiki> findWikis = hotWikiRepository.findByCountry(country);
-                
-                return getHotWikiResponses(findWikis);
-            }
-        }
-
-        return getAllHotWikis();
+        return new HotWikiResponse(startTime, endTime, hotWikiInfos);
     }
 
     private List<HotWikiResponse> getHotWikiResponses(List<HotWiki> findWikis) {

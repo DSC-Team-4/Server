@@ -38,7 +38,8 @@ public class WikiScheduler {
                 .limit(topMaxCount)
                 .toList();
 
-        hotWikiRepository.saveAll(HotWiki.ofList(hotWikis));
+        LocalDateTime dbDate = now.plusHours(9);
+        hotWikiRepository.saveAll(HotWiki.ofList(hotWikis, dbDate));
 
         log.info("found Wiki data size: {}", wikis.size());
         log.info("saved HotWiki data size: {}", hotWikis.size());
