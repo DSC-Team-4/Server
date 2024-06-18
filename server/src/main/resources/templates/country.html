@@ -1,0 +1,79 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:replace="fragments/header :: head"></head>
+<body>
+
+<header th:replace="fragments/navbar :: header"></header>
+
+<main>
+    <section class="py-5 text-center container search-box">
+        <div>
+            <h1 class="fw-light"><strong>Wiki Trend</strong></h1>
+            <form method="get" style="margin-top: 10px;" id="searchContainer">
+                <div class="form-group">
+                    <fieldset>
+                        <legend>나라 선택:</legend>
+                        <div class="d-flex justify-content-center flex-wrap">
+                            <div class="form-check me-3">
+                                <input type="radio" id="korea" name="country" value="한국" class="form-check-input" checked>
+                                <label for="korea" class="form-check-label">한국</label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input type="radio" id="usa" name="country" value="미국" class="form-check-input">
+                                <label for="usa" class="form-check-label">미국</label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input type="radio" id="china" name="country" value="중국" class="form-check-input">
+                                <label for="china" class="form-check-label">중국</label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input type="radio" id="india" name="country" value="인도" class="form-check-input">
+                                <label for="india" class="form-check-label">인도</label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input type="radio" id="vietnam" name="country" value="베트남" class="form-check-input">
+                                <label for="vietnam" class="form-check-label">베트남</label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input type="radio" id="canada" name="country" value="캐나다" class="form-check-input">
+                                <label for="canada" class="form-check-label">캐나다</label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input type="radio" id="japan" name="country" value="일본" class="form-check-input">
+                                <label for="japan" class="form-check-label">일본</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" id="submitButton">검색하기</button>
+            </form>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="popularList">
+                <div class="col" th:each="wiki : ${wikis}">
+                    <div class="card shadow-sm">
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                        <div class="card-body">
+                            <p class="card-text" th:text="${wiki.title()}">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a type="button" class="btn btn-sm btn-outline-secondary" th:href="${wiki.uri()}">바로가기</a>
+                                </div>
+                                <small class="text-muted" >마지막 편집 날짜: [[${wiki.editedAt()}]]</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+<script th:src="@{/country.js}"></script>
+
+</body>
+</html>
