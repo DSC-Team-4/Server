@@ -4,7 +4,9 @@ import dsc.server.dto.HotWikiResponse;
 import dsc.server.dto.WikiResponse;
 import dsc.server.service.HotWikiService;
 import dsc.server.service.WikiService;
+import java.time.format.DateTimeFormatter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,10 +39,13 @@ public class WikiSearchController {
     @ResponseBody
     public HotWikiResponse getHotWikis(
             Model model,
-            @RequestParam("startTime") LocalDateTime startTime,
-            @RequestParam("endTime") LocalDateTime endTime
+            @RequestParam("startTime") String startTime,
+            @RequestParam("endTime") String endTime
     ) {
-        HotWikiResponse result = hotWikiService.findByTimeBetween(startTime, endTime);
+        LocalDateTime startDateTime = LocalDateTime.parse(startTime).plusHours(9);
+        LocalDateTime endDateTime = LocalDateTime.parse(endTime).plusHours(9);
+
+        HotWikiResponse result = hotWikiService.findByTimeBetween(startDateTime, endDateTime);
 
         model.addAttribute("wikis", result);
 

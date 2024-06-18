@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public record HotWikiResponse(
-        LocalDateTime startTime,
-        LocalDateTime endTime,
         List<HotWikiInfo> wikiInfos
 ) {
     public static List<HotWikiResponse> ofList(Map<LocalDateTime, List<HotWiki>> hotWikiMap) {
@@ -17,10 +15,8 @@ public record HotWikiResponse(
 
         for (Entry<LocalDateTime, List<HotWiki>> entry : hotWikiMap.entrySet()) {
             List<HotWikiInfo> hotWikiInfos = HotWikiInfo.ofList(entry.getValue());
-            LocalDateTime endTime = entry.getKey();
-            LocalDateTime startTime = endTime.minusHours(3);
 
-            HotWikiResponse hotWikiResponse = new HotWikiResponse(startTime, endTime, hotWikiInfos);
+            HotWikiResponse hotWikiResponse = new HotWikiResponse(hotWikiInfos);
             result.add(hotWikiResponse);
         }
 
