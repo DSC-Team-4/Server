@@ -24,11 +24,10 @@ public class WikiRestController {
     private final WikiService wikiService;
 
     @GetMapping("/search")
-    public List<WikiResponse> search(@RequestParam("period") String period,
-                                     @RequestParam("country") String country,
-                                     @RequestParam("maxCount") int maxCount
+    public List<WikiResponse> search(@RequestParam("country") String country,
+                                     @RequestParam(value = "maxCount") int maxCount
     ) {
-        return wikiService.findByFilter(period, country, maxCount);
+        return wikiService.findByFilter(country, maxCount);
     }
 
     @GetMapping("/all-data")

@@ -38,29 +38,14 @@ public class WikiService {
         return wikiRepository.findAll();
     }
 
-    public List<WikiResponse> findByFilter(String period, String country, int maxCount) {
-        if (!"all".equals(period)) {
-            LocalDateTime start = LocalDateTime.now().minusMonths(Integer.parseInt(period));
-            LocalDateTime end = LocalDateTime.now();
-
-            if (!"all".equals(country)) {
-                List<Wiki> findWikis = wikiRepository.findByCountryAndEditedAtBetweenOrderByEwmaDesc(country, start, end);
-
-                return WikiResponse.ofList(findWikis, maxCount);
-            }
-
-            List<Wiki> findWikis = wikiRepository.findByEditedAtBetweenOrderByEwmaDesc(start, end);
+    public List<WikiResponse> findByFilter(String country, int maxCount) {
+        if ("all".equals(country)) {
+            List<Wiki> findWikis = wikiRepository.findAllByOrderByEwmaDesc();
 
             return WikiResponse.ofList(findWikis, maxCount);
-        }else {
-            if (!"all".equals(country)) {
-                List<Wiki> findWikis = wikiRepository.findByCountryOrderByEwmaDesc(country);
-
-                return WikiResponse.ofList(findWikis, maxCount);
-            }
         }
 
-        List<Wiki> findWikis = wikiRepository.findAllByOrderByEwmaDesc();
+        List<Wiki> findWikis = wikiRepository.findByCountryOrderByEwmaDesc(country);
 
         return WikiResponse.ofList(findWikis, maxCount);
     }
@@ -122,8 +107,6 @@ public class WikiService {
     }
 
     public void updateEwma(List<WikiUpdateRequest> updateRequest) {
-        List<Wiki> saveWikis = new ArrayList<>();
-
         for (WikiUpdateRequest request : updateRequest) {
             Wiki findWiki = wikiRepository.findByMetaId(request.metaId()).orElseThrow();
             Double newEwma = request.ewma();

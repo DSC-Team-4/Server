@@ -1,11 +1,13 @@
 package dsc.server.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -58,8 +60,7 @@ public class HotWiki {
         return false;
     }
 
-    public static List<HotWiki> ofList(List<Wiki> wikis) {
-        LocalDateTime now = LocalDateTime.now();
+    public static List<HotWiki> ofList(List<Wiki> wikis, LocalDateTime dbDate) {
         return wikis.stream().map(wiki -> new HotWiki(
                 wiki.getTitle(),
                 wiki.getCountry(),
@@ -68,7 +69,7 @@ public class HotWiki {
                 wiki.getEwma(),
                 wiki.getEditCount(),
                 wiki.getEditedAt(),
-                now
+                dbDate
             )).toList();
     }
 }
