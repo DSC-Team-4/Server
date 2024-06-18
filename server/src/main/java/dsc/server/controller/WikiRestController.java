@@ -23,13 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class WikiRestController {
     private final WikiService wikiService;
 
-    @GetMapping("/search")
-    public List<WikiResponse> search(@RequestParam("country") String country,
-                                     @RequestParam(value = "maxCount") int maxCount
-    ) {
-        return wikiService.findByFilter(country, maxCount);
-    }
-
     @GetMapping("/all-data")
     public List<WikiResponse> getWikis() {
         List<Wiki> resultNotEwmaWikis = wikiService.getAll();
