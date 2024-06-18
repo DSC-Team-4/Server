@@ -43,9 +43,7 @@ public class WikiRestController {
 
     @PostMapping("/save")
     public Long save(@RequestBody NotWikiRequest request) {
-        LocalDateTime dbDate = request.editedAt().plusHours(9);
-
-        NotEwmaWiki newNotEwmaWiki = new NotEwmaWiki(request.title(), request.country(), request.uri(), request.metaId(), dbDate);
+        NotEwmaWiki newNotEwmaWiki = new NotEwmaWiki(request.title(), request.country(), request.uri(), request.metaId(), request.editedAt());
         return wikiService.save(newNotEwmaWiki);
     }
 }
