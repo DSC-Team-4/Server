@@ -10,8 +10,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface WikiRepository extends MongoRepository<Wiki, String> {
     List<Wiki> findByCountryAndEditedAtBetweenOrderByEwmaDesc(String country, LocalDateTime start, LocalDateTime end);
     List<Wiki> findByCountryOrderByEwmaDesc(String country);
-    Optional<Wiki> findTop1ByMetaIdAndEwmaIsNotNullOrderByEditedAtDesc(UUID metaId);
-    Optional<Wiki> findByMetaId(UUID uuid);
+    Optional<Wiki> findTop1ByMetaIdAndEwmaIsNotNullOrderByEditedAtDesc(Long metaId);
+    Optional<Wiki> findByMetaId(Long metaId);
     List<Wiki> findByEditedAtBetweenOrderByEwmaDesc(LocalDateTime start, LocalDateTime end);
     List<Wiki> findByEditedAtBetween(LocalDateTime threeHoursAgo, LocalDateTime now);
     List<Wiki> findAllByOrderByEwmaDesc();

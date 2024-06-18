@@ -21,11 +21,11 @@ public class NotEwmaWiki {
     private final String title;
     private final String country;
     private final String uri;
-    private final UUID metaId;
+    private final Long metaId;
     private Double ewma = null;
     private final LocalDateTime editedAt;
 
-    public NotEwmaWiki(String title, String country, String uri, UUID metaId, LocalDateTime editedAt) {
+    public NotEwmaWiki(String title, String country, String uri, Long metaId, LocalDateTime editedAt) {
         this.title = title;
         this.country = country;
         this.uri = uri;

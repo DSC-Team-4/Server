@@ -1,14 +1,10 @@
 package dsc.server.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.cglib.core.Local;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,13 +21,13 @@ public class HotWiki {
     private final String title;
     private final String country;
     private final String uri;
-    private final UUID metaId;
+    private final Long metaId;
     private final int editCount;
     private final Double ewma;
     private final LocalDateTime editedAt;
     private LocalDateTime createdAt;
 
-    public HotWiki(String title, String country, String uri, UUID metaId, Double ewma, int editCount, LocalDateTime editedAt, LocalDateTime createdAt) {
+    public HotWiki(String title, String country, String uri, Long metaId, Double ewma, int editCount, LocalDateTime editedAt, LocalDateTime createdAt) {
         this.title = title;
         this.country = country;
         this.uri = uri;

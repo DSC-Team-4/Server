@@ -52,12 +52,12 @@ public class WikiService {
 
     public List<WikiEwmaRequest> getWikisForUpdateEwma() {
         List<NotEwmaWiki> findNotEwmaWikis = notEwmaWikiRepository.findByEwmaIsNull();
-        Map<UUID, List<NotEwmaWiki>> wikisByMetaId = findNotEwmaWikis.stream().collect(Collectors.groupingBy(
+        Map<Long, List<NotEwmaWiki>> wikisByMetaId = findNotEwmaWikis.stream().collect(Collectors.groupingBy(
                 dsc.server.entity.NotEwmaWiki::getMetaId));
 
         List<WikiEwmaRequest> result = new ArrayList<>();
 
-        for (Entry<UUID, List<NotEwmaWiki>> entry : wikisByMetaId.entrySet()) {
+        for (Entry<Long, List<NotEwmaWiki>> entry : wikisByMetaId.entrySet()) {
             List<WikiInfo> wikiInfos = new ArrayList<>();
             Wiki beforeWiki = null;
 

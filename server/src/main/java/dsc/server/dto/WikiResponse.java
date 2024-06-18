@@ -12,7 +12,7 @@ public record WikiResponse(
         String title,
         String country,
         String uri,
-        UUID metaId,
+        Long metaId,
         Double ewma,
         int editCount,
         LocalDateTime editedAt

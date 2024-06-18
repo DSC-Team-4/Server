@@ -21,12 +21,12 @@ public class Wiki {
     private final String title;
     private final String country;
     private final String uri;
-    private final UUID metaId;
+    private final Long metaId;
     private final int editCount;
     private Double ewma;
     private final LocalDateTime editedAt;
 
-    public Wiki(String title, String country, String uri, UUID metaId, Double ewma, int editCount, LocalDateTime editedAt) {
+    public Wiki(String title, String country, String uri, Long metaId, Double ewma, int editCount, LocalDateTime editedAt) {
         this.title = title;
         this.country = country;
         this.uri = uri;

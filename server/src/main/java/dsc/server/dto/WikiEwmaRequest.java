@@ -3,10 +3,9 @@ package dsc.server.dto;
 import dsc.server.entity.NotEwmaWiki;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 public record WikiEwmaRequest(
-    UUID metaId,
+    Long metaId,
     Double beforeEwma,
     List<WikiInfo> wikiInfos
 ){
