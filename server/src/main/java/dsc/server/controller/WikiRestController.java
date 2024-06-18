@@ -8,6 +8,7 @@ import dsc.server.dto.WikiResponse;
 import dsc.server.entity.NotEwmaWiki;
 import dsc.server.entity.Wiki;
 import dsc.server.service.WikiService;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +44,9 @@ public class WikiRestController {
     @PostMapping("/save")
     public Long save(@RequestBody NotWikiRequest request) {
         UUID metaId = UUID.fromString(request.metaId());
-        NotEwmaWiki newNotEwmaWiki = new NotEwmaWiki(request.title(), request.country(), request.uri(), metaId, request.editedAt());
+        LocalDateTime dbDate = request.editedAt().minusHours(9);
+
+        NotEwmaWiki newNotEwmaWiki = new NotEwmaWiki(request.title(), request.country(), request.uri(), metaId, dbDate);
         return wikiService.save(newNotEwmaWiki);
     }
 }
