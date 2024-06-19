@@ -31,7 +31,10 @@ public class WikiScheduler {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime threeHoursAgo = now.minusHours(3);
 
-        List<Wiki> wikis = wikiService.findByEditedAtBetween(threeHoursAgo, now);
+        LocalDateTime startDbDate = threeHoursAgo.plusHours(9);
+        LocalDateTime endDbDate = now.plusHours(9);
+
+        List<Wiki> wikis = wikiService.findByEditedAtBetween(startDbDate, endDbDate);
 
         List<Wiki> hotWikis = wikis.stream()
                 .sorted(Comparator.comparingDouble(Wiki::getEwma))

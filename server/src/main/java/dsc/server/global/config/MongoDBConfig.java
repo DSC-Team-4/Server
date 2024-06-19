@@ -33,14 +33,14 @@ public class MongoDBConfig {
         return converter;
     }
 
-    @Bean
-    public MongoCustomConversions customConversions() {
-        return MongoCustomConversions.create(
-                adapter -> {
-                    adapter.registerConverter( new DateToLocalDateTimeKstConverter() );
-                }
-        );
-    }
+//    @Bean
+//    public MongoCustomConversions customConversions() {
+//        return MongoCustomConversions.create(
+//                adapter -> {
+//                    adapter.registerConverter( new DateToLocalDateTimeKstConverter() );
+//                }
+//        );
+//    }
 
     @Component
     @ReadingConverter
