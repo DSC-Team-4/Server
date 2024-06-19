@@ -14,8 +14,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const dateTimeString = date + 'T' + time + ':00';
-        const start = new Date(dateTimeString).getTime();
-        const end = start + (3*60*60*1000);
+        const start = new Date(new Date(dateTimeString).getTime() + (9 * 60 * 60 * 1000)).toISOString();
+        const end = new Date(new Date(dateTimeString).getTime() + (12 * 60 * 60 * 1000)).toISOString();
+
+        console.log(start);
+        console.log(end);
 
         $.ajax({
             url: '/get-hot-wikis',

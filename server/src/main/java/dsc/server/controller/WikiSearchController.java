@@ -1,6 +1,5 @@
 package dsc.server.controller;
 
-import dsc.server.dto.HotWikiResponse;
 import dsc.server.dto.WikiResponse;
 import dsc.server.entity.HotWiki;
 import dsc.server.service.HotWikiService;
@@ -10,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -35,13 +36,16 @@ public class WikiSearchController {
     @GetMapping("/get-hot-wikis")
     public String getHotWikis(
             Model model,
-            @RequestParam("startTime") LocalDateTime startTime,
-            @RequestParam("endTime") LocalDateTime endTime
+            @RequestParam("startTime") String startTime,
+            @RequestParam("endTime") String endTime
     ) {
-//        LocalDateTime startDateTime = startTime.plusHours(9);
-//        LocalDateTime endDateTime = endTime.plusHours(9);
+        LocalDateTime startDateTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_DATE_TIME);
+        LocalDateTime endDateTime = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_DATE_TIME);
 
-        List<HotWiki> result = hotWikiService.findByTimeBetween(startTime, endTime);
+//        System.out.println(startDateTime);
+//        System.out.println(endDateTime);
+
+        List<HotWiki> result = hotWikiService.findByTimeBetween(startDateTime, endDateTime);
 
         model.addAttribute("wikis", result);
 
