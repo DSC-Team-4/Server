@@ -5,10 +5,12 @@ import dsc.server.dto.SearchRequest;
 import dsc.server.dto.WikiEwmaRequest;
 import dsc.server.dto.WikiUpdateRequest;
 import dsc.server.dto.WikiResponse;
+import dsc.server.entity.HotWiki;
 import dsc.server.entity.NotEwmaWiki;
 import dsc.server.entity.Wiki;
 import dsc.server.service.WikiService;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +45,8 @@ public class WikiRestController {
 
     @PostMapping("/save")
     public Long save(@RequestBody NotWikiRequest request) {
-        NotEwmaWiki newNotEwmaWiki = new NotEwmaWiki(request.title(), request.country(), request.uri(), request.metaId(), request.editedAt());
+        NotEwmaWiki newNotEwmaWiki = new NotEwmaWiki(request.title(), request.country(), request.uri(),
+                request.metaId(), request.editedAt());
         return wikiService.save(newNotEwmaWiki);
     }
 }

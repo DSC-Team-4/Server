@@ -33,4 +33,8 @@ public class HotWikiService {
 
         return HotWikiResponse.ofList(hotWikis);
     }
+
+    public void saveAll(List<HotWiki> hotWikis) {
+        hotWikiRepository.saveAll(hotWikis);
+    }
 }

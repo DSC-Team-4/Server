@@ -2,8 +2,10 @@ package dsc.server.controller;
 
 import dsc.server.dto.WikiResponse;
 import dsc.server.entity.HotWiki;
+import dsc.server.entity.Wiki;
 import dsc.server.service.HotWikiService;
 import dsc.server.service.WikiService;
+import java.util.Comparator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RequiredArgsConstructor
@@ -50,5 +54,28 @@ public class WikiSearchController {
         model.addAttribute("wikis", result);
 
         return "period :: #popularList";
+    }
+
+    @GetMapping("/save-hot-wiki")
+    @ResponseBody
+    public void saveHotWikis() {
+        final int topMaxCount = 10;
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime threeHoursAgo = now.minusHours(3);
+
+        LocalDateTime startDbDate = threeHoursAgo.plusHours(9);
+        LocalDateTime endDbDate = now.plusHours(9);
+
+        List<Wiki> wikis = wikiService.findByEditedAtBetween(startDbDate, endDbDate);
+
+        List<Wiki> hotWikis = wikis.stream()
+                .sorted(Comparator.comparingDouble(Wiki::getEwma))
+                .limit(topMaxCount)
+                .toList();
+
+        LocalDateTime dbDate = now.plusHours(9);
+        System.out.println("saved HotWikis size : " + hotWikis.size());
+        hotWikiService.saveAll(HotWiki.ofList(hotWikis, dbDate));
     }
 }
