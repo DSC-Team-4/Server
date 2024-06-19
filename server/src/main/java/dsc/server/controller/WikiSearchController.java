@@ -38,10 +38,10 @@ public class WikiSearchController {
             @RequestParam("startTime") LocalDateTime startTime,
             @RequestParam("endTime") LocalDateTime endTime
     ) {
-        LocalDateTime startDateTime = startTime.plusHours(9);
-        LocalDateTime endDateTime = endTime.plusHours(9);
+//        LocalDateTime startDateTime = startTime.plusHours(9);
+//        LocalDateTime endDateTime = endTime.plusHours(9);
 
-        List<HotWiki> result = hotWikiService.findByTimeBetween(startDateTime, endDateTime);
+        List<HotWiki> result = hotWikiService.findByTimeBetween(startTime, endTime);
 
         model.addAttribute("wikis", result);
 

@@ -23,10 +23,8 @@ public class HotWikiService {
     }
 
     public List<HotWiki> findByTimeBetween(LocalDateTime startTime, LocalDateTime endTime) {
-        List<HotWiki> findWikis = hotWikiRepository.findByCreatedAtBetweenOrderByEwmaDesc(startTime, endTime);
-//        List<HotWikiInfo> hotWikiInfos = HotWikiInfo.ofList(findWikis);
-
-        return findWikis;
+        //        List<HotWikiInfo> hotWikiInfos = HotWikiInfo.ofList(findWikis);
+        return hotWikiRepository.findByEditedAtBetweenOrderByEwmaDesc(startTime, endTime);
     }
 
     private List<HotWikiResponse> getHotWikiResponses(List<HotWiki> findWikis) {

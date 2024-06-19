@@ -12,17 +12,17 @@ import java.time.ZoneId;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new TimestampToLocalDateTimeConverter());
-    }
-
-    public static class TimestampToLocalDateTimeConverter implements Converter<String, LocalDateTime> {
-
-        @Override
-        public LocalDateTime convert(String s) {
-            long timestamp = Long.parseLong(s);
-            return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault());
-        }
-    }
+//    @Override
+//    public void addFormatters(FormatterRegistry registry) {
+//        registry.addConverter(new TimestampToLocalDateTimeConverter());
+//    }
+//
+//    public static class TimestampToLocalDateTimeConverter implements Converter<String, LocalDateTime> {
+//
+//        @Override
+//        public LocalDateTime convert(String s) {
+//            long timestamp = Long.parseLong(s);
+//            return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault());
+//        }
+//    }
 }
