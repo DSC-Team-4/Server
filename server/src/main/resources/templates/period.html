@@ -9,6 +9,8 @@
     <section class="py-5 text-center container search-box">
         <div>
             <h1 class="fw-light"><strong>Wiki Trend</strong></h1>
+            <h3 class="fw-light"><strong>기간별 인기 문서 확인(3시간 단위)</strong></h3>
+            <br>
             <form method="get" action="/get-hot-wikis" style="margin-top: 10px;" id="searchContainer">
                 <!-- 날짜 선택 -->
                 <div class="form-group mb-3">
@@ -43,21 +45,21 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-body">
                             <p class="card-text">
-                                <span th:text="${stat.index + 1} + '. '"></span>
-                                <span th:text="${wiki.title}">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</span>
+                                <span th:text="${stat.index + 1} + '위'"></span>
+                                <span th:text="${wiki.title}" class="list-title"></span>
                             </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a type="button" class="btn btn-sm btn-outline-secondary" th:href="${wiki.uri}">바로가기</a>
-                                </div>
-                                <small class="text-muted" >마지막 편집 날짜: [[${wiki.editedAt}]]</small>
-                            </div>
-                            <p class="card-text">
-                                EWMA : [[${wiki.ewma}]]
+                            <p class="card-text mb-1">
+                                인기문서 지수 : [[${wiki.ewma}]]
                             </p>
                             <p class="card-text">
                                 편집횟수 : [[${wiki.editCount}]]
                             </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a type="button" class="btn btn-sm btn-outline-secondary" th:href="${wiki.uri}">인기 문서 페이지로 이동</a>
+                                </div>
+                                <small class="text-muted" >마지막 편집 날짜: [[${wiki.editedAt}]]</small>
+                            </div>
                         </div>
                     </div>
                 </div>
