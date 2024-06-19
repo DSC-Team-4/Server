@@ -1,5 +1,6 @@
 package dsc.server.service;
 
+import com.mongodb.client.result.UpdateResult;
 import dsc.server.dto.WikiEwmaRequest;
 import dsc.server.dto.WikiEwmaRequest.WikiInfo;
 import dsc.server.dto.WikiUpdateRequest;
@@ -14,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -113,7 +113,7 @@ public class WikiService {
             Long id = findWiki.getId();
             int editCount = request.editCount();
 
-            updateWikiEwma(newEwma, id, editCount);
+            updateWikiEwmaAndEditCount(newEwma, id, editCount);
         }
     }
 
@@ -121,11 +121,23 @@ public class WikiService {
         return wikiRepository.findByEditedAtBetween(threeHoursAgo, now);
     }
 
-    private void updateWikiEwma(Double newEwma, Long id, int editCount) {
+    private void updateWikiEwmaAndEditCount(Double newEwma, Long id, int editCount) {
         Query query = new Query(Criteria.where("_id").is(id));
         Update update = Update.update("ewma", newEwma);
         update.set("editCount", editCount);
 
         mongoTemplate.updateFirst(query, update, Wiki.class);
     }
+
+    public void updateWikiEwma(Long id, Double newEwma) {
+        Query query = new Query(Criteria.where("_id").is(id));
+        Update update = Update.update("ewma", newEwma);
+
+        UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Wiki.class);
+    }
+
+    public List<Wiki> findByExceptEwma(Double ewma) {
+        return wikiRepository.findByEwmaGreaterThan(ewma);
+    }
+
 }
