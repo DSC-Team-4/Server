@@ -41,7 +41,7 @@ public class WikiScheduler {
         LocalDateTime dbDate = now.plusHours(9);
         hotWikiRepository.saveAll(HotWiki.ofList(hotWikis, dbDate));
 
-        log.info("found Wiki data size: {}", wikis.size());
+        log.info("found Hot Wiki data size: {}", wikis.size());
         log.info("saved HotWiki data size: {}", hotWikis.size());
     }
 
@@ -56,7 +56,7 @@ public class WikiScheduler {
             double newEwma = it.getEwma() * 0.8;
             wikiService.updateWikiEwma(it.getId(), newEwma);
         });
-
+        log.info("found Wiki data size: {}", findWikis.size());
         log.info("updated wiki EWMA");
     }
 }
