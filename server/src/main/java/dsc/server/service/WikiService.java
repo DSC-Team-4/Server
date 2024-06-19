@@ -85,7 +85,7 @@ public class WikiService {
                             notEwmaWiki.getCountry(),
                             notEwmaWiki.getUri(),
                             notEwmaWiki.getMetaId(),
-                            1.0,
+                            5.0,
                             1,
                             notEwmaWiki.getEditedAt());
 
