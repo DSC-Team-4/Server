@@ -44,4 +44,19 @@ public class WikiScheduler {
         log.info("found Wiki data size: {}", wikis.size());
         log.info("saved HotWiki data size: {}", hotWikis.size());
     }
+
+    @Scheduled(fixedDelay = 1000 * 60 * 5, zone = "Asia/Seoul")
+    public void updateEwma() {
+        log.info("updating wiki EWMA");
+
+        Double ewma = 1.0;
+        List<Wiki> findWikis = wikiService.findByExceptEwma(ewma);
+
+        findWikis.forEach(it -> {
+            double newEwma = it.getEwma() * 0.8;
+            wikiService.updateWikiEwma(it.getId(), newEwma);
+        });
+
+        log.info("updated wiki EWMA");
+    }
 }

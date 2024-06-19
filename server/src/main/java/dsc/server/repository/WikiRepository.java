@@ -15,4 +15,6 @@ public interface WikiRepository extends MongoRepository<Wiki, String> {
     List<Wiki> findByEditedAtBetweenOrderByEwmaDesc(LocalDateTime start, LocalDateTime end);
     List<Wiki> findByEditedAtBetween(LocalDateTime threeHoursAgo, LocalDateTime now);
     List<Wiki> findAllByOrderByEwmaDesc();
+
+    List<Wiki> findByEwmaGreaterThan(Double underEwma);
 }
