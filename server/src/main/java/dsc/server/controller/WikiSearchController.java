@@ -43,11 +43,8 @@ public class WikiSearchController {
             @RequestParam("startTime") String startTime,
             @RequestParam("endTime") String endTime
     ) {
-        LocalDateTime startDateTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_DATE_TIME);
-        LocalDateTime endDateTime = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_DATE_TIME);
-
-//        System.out.println(startDateTime);
-//        System.out.println(endDateTime);
+        LocalDateTime startDateTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_DATE_TIME).plusHours(9);
+        LocalDateTime endDateTime = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_DATE_TIME).plusHours(9);
 
         List<HotWiki> result = hotWikiService.findByTimeBetween(startDateTime, endDateTime);
 
