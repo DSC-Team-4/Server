@@ -29,7 +29,7 @@ public class WikiSearchController {
 
         model.addAttribute("wikis", result);
 
-        return "/country :: #popularList";
+        return "country :: #popularList";
     }
 
     @GetMapping("/get-hot-wikis")
@@ -45,6 +45,6 @@ public class WikiSearchController {
 
         model.addAttribute("wikis", result);
 
-        return "/period :: #popularList";
+        return "period :: #popularList";
     }
 }
