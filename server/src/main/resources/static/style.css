@@ -1,3 +1,7 @@
+body {
+    padding-bottom: 100px;
+}
+
 input {
     width: 600px;
     height: 60px;
@@ -76,4 +80,24 @@ input {
 .filter-box {
     justify-content: space-between;
     margin: 5px 100px 15px;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-check-input {
+    margin-right: 5px;
+}
+
+.list-title {
+    font-weight: bold;
+}
+
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
 }
