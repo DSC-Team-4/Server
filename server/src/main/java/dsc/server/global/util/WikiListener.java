@@ -1,6 +1,5 @@
 package dsc.server.global.util;
 
-import dsc.server.entity.NotEwmaWiki;
 import dsc.server.entity.Wiki;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
