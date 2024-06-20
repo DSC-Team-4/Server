@@ -48,6 +48,10 @@ public class WikiSearchController {
 
         List<HotWiki> result = hotWikiService.findByTimeBetween(startDateTime, endDateTime);
 
+        result.forEach(it -> {
+            it.setEditedAt(it.getEditedAt().minusHours(9));
+        });
+
         model.addAttribute("wikis", result);
 
         return "period :: #popularList";

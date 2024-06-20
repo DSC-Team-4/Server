@@ -24,7 +24,7 @@ public class HotWiki {
     private final Long metaId;
     private final int editCount;
     private final Double ewma;
-    private final LocalDateTime editedAt;
+    private LocalDateTime editedAt;
     private LocalDateTime createdAt;
 
     public HotWiki(String title, String country, String uri, Long metaId, Double ewma, int editCount, LocalDateTime editedAt, LocalDateTime createdAt) {
