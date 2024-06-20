@@ -1,7 +1,6 @@
 package dsc.server.service;
 
 import dsc.server.dto.HotWikiResponse;
-import dsc.server.dto.HotWikiResponse.HotWikiInfo;
 import dsc.server.entity.HotWiki;
 import dsc.server.repository.HotWikiRepository;
 import java.time.LocalDateTime;
@@ -23,7 +22,6 @@ public class HotWikiService {
     }
 
     public List<HotWiki> findByTimeBetween(LocalDateTime startTime, LocalDateTime endTime) {
-        //        List<HotWikiInfo> hotWikiInfos = HotWikiInfo.ofList(findWikis);
         return hotWikiRepository.findByEditedAtBetweenOrderByEwmaDesc(startTime, endTime);
     }
 
